@@ -1,0 +1,14 @@
+name: Tests
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  tests-on-push:
+    uses: ./.github/workflows/push-image-to-ghcr.yml
+    secrets: inherit
+    permissions:
+      packages: write
+

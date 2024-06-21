@@ -1,0 +1,25 @@
+name: Push container to ghcr.io
+on:
+  workflow_call:
+
+jobs:
+  container:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - name: Checkout project's code
+        uses: actions/checkout@v4
+
+      - name: Login to the project's ghcr.io
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push the container
+        run: |
+          pushd stuff
+          ./build-and-push.sh
+          popd
